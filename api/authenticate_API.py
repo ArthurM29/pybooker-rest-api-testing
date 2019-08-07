@@ -8,7 +8,7 @@ class AuthenticateAPI(ApiCall):
 
     def __init__(self, headers=None, payload=None, **kwargs):
         if headers is None:
-            self.headers = {'accept': 'application/json'}
+            self.headers = {'content-type': 'application/json'}
         else:
             self.headers = headers
         super().__init__(method='post', headers=self.headers, payload=payload, **kwargs)
