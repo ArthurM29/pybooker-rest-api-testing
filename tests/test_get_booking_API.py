@@ -1,49 +1,20 @@
-from api.get_bookings_API import GetBookingsAPI
+from api.get_booking_API import GetBookingAPI
+import pytest
 
 
-def test_get_all_bookings():
-    get_bookings_api = GetBookingsAPI()
-    response = get_bookings_api.call()
+def test_get_booking_10():
+    get_booking_api = GetBookingAPI(10)
+    response = get_booking_api.call()
+    booking = response.json()
     assert response.status_code == 200
+    assert booking['firstname'] == 'Mary'
+    assert booking['lastname'] == 'Smith'
 
 
-def test_get_bookings_by_name():
-    query_params = {'firstname': 'Sally', 'lastname': "Ericsson"}
-    get_bookings_api = GetBookingsAPI(query_params=query_params)
-    response = get_bookings_api.call()
-    bookings = response.json()
+@pytest.mark.skip
+def test_get_booking_with_invalid_id():
+    get_booking_api = GetBookingAPI(1999)
+    response = get_booking_api.call()
+    print(f"RESPONSE: {response}, type: {type(response)}")
+    assert response.status_code == 404
 
-    assert response.status_code == 200
-    assert len(bookings) == 1
-    assert bookings[0]['bookingid'] == 1
-
-
-def test_get_bookings_by_date():
-    query_params = {'checkin': '2018-01-01', 'checkout': "2019-01-01"}
-    get_bookings_api = GetBookingsAPI(query_params=query_params)
-    response = get_bookings_api.call()
-    bookings = response.json()
-
-    assert response.status_code == 200
-    assert len(bookings) == 1
-    assert bookings[0]['bookingid'] == 3
-
-
-def test_get_bookings_by_checkin_date_only():
-    query_params = {'checkin': '2018-01-01'}
-    get_bookings_api = GetBookingsAPI(query_params=query_params)
-    response = get_bookings_api.call()
-    bookings = response.json()
-
-    assert response.status_code == 200
-    assert len(bookings) == 5
-
-
-def test_get_bookings_by_checkout_date_only():
-    query_params = {'checkout': "2019-01-01"}
-    get_bookings_api = GetBookingsAPI(query_params=query_params)
-    response = get_bookings_api.call()
-    bookings = response.json()
-
-    assert response.status_code == 200
-    assert len(bookings) == 4

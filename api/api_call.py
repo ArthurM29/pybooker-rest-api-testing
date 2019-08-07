@@ -19,12 +19,14 @@ class ApiCall:
     def call(self):
         if self.method:
             print(
-                f"Calling route: {self.url}, method: {self.method.upper()}, payload = {self.payload}, "
-                f"headers = {self.headers}, query_params = {self.query_params}, **kwargs = {self.kwargs}")
+                f"\n---->Request: {self.url}, method: {self.method.upper()} \npayload = {self.payload}, "
+                f"\nheaders = {self.headers}, query_params = {self.query_params}, **kwargs = {self.kwargs}")
 
             response = requests.request(self.method, self.url, data=self.payload, headers=self.headers,
                                         params=self.query_params)
-            print(f"Response: Status code: {response.status_code}, Body: {json.dumps(response.text, indent=2)}")
+            # TODO handle the case when json() deserialization fails when request fails
+            print(f"<----Response: \nStatus code: {response.status_code} \nBody: {json.dumps(response.json(), indent=2)}")
             return response
         else:
             raise Exception('Invalid verb')
+

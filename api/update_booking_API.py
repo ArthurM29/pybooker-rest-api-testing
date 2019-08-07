@@ -2,9 +2,9 @@ from api.api_call import ApiCall
 from config.config import URL
 
 
-class CreateBookingAPI(ApiCall):
-    """Creates a new booking in the API"""
-    path = URL.BOOKING_ROUTE
+class UpdateBookingAPI(ApiCall):
+    """Updates a current booking"""
+    path = URL.BOOKING_ID_ROUTE
 
     def __init__(self, headers=None, payload=None, **kwargs):
         if headers is None:

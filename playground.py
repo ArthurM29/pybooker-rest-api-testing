@@ -1,3 +1,4 @@
-import datetime
+from models.BookingModel import BookingModel
 
-print(type(datetime.datetime.now()))
+bm = BookingModel()
+print(bm)
